@@ -2,14 +2,12 @@ Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	1.2.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Patch0:		%{name}-nostatic_compilation.patch
 URL:		http://dar.linux.free.fr/
-BuildRequires:	glibc-static
-BuildRequires:	libstdc++-static
-BuildRequires:	zlib-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -147,17 +145,18 @@ katalogów i plików. Mo¿liwo¶ci:
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-%{__make}
+%{__make} BUILD_STATIC="no" OPTIMIZATION="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/bin,%{_mandir}/man1}
-install dar $RPM_BUILD_ROOT/bin
-install dar_xform $RPM_BUILD_ROOT/bin
-install dar_slave $RPM_BUILD_ROOT/bin
-install *.1 $RPM_BUILD_ROOT%{_mandir}/man1
+%{__make} install BUILD_STATIC="no" \
+	INSTALL=install \
+	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT \
+	BIN_DIR=%{_bindir} \
+	MAN_DIR=%{_mandir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -165,5 +164,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc BUGS CHANGES NOTES README TODO TUTORIAL
-%attr(755,root,root) /bin/*
+%attr(755,root,root) %{_bindir}/*
 %attr(644,root,root) %{_mandir}/*
