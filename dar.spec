@@ -1,20 +1,24 @@
 #
 # Conditional build:
 %bcond_without	static	# build without dar_static
-
+#
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	2.0.0
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # Source0-md5:	a2f8f8a10d49d06d848ec794d7db65e8
+Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
 BuildRequires:	attr-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
 BuildRequires:	zlib-devel
 %if %{with static}
 BuildRequires:	attr-static
@@ -24,6 +28,9 @@ BuildRequires:	libstdc++-static
 BuildRequires:	zlib-static
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# workaround for gcc bug optimization/12965 (should be fixed in 3.3.3)
+%define		specflags_alpha		-O
 
 %description
 dar is a shell command, that makes backup of a directory tree and
@@ -170,19 +177,33 @@ Static version of dar backup tool.
 Statyczna wersja archiwizatora dar.
 
 %package devel
-Summary:        Header files and libraries to develop dar software
-Summary(pl):    Pliki nag³ówkowe i biblioteki
+Summary:        Header files to develop dar software
+Summary(pl):    Pliki nag³ówkowe biblioteki dar
 Group:          Development/Libraries
 Requires:       %{name} = %{version}
 
 %description devel
-Header files and libraries to develop software which operates on dar.
+Header files to develop software which operates on dar.
 
 %description devel -l pl
-Pliki nag³ówkowe i biblioteki potrzebne do rozwoju oprogramowania dar.
+Pliki nag³ówkowe potrzebne do rozwoju oprogramowania korzystaj±cego z
+dara.
+
+%package libs-static
+Summary:	Static version of dar library
+Summary(pl):	Statyczna wersja biblioteki dar
+Group:          Development/Libraries
+Requires:       %{name}-devel = %{version}
+
+%description libs-static
+Static version of dar library.
+
+%description libs-static -l pl
+Statyczna wersja biblioteki dar.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %{__libtoolize}
@@ -200,7 +221,8 @@ Pliki nag³ówkowe i biblioteki potrzebne do rozwoju oprogramowania dar.
 rm -rf $RPM_BUILD_ROOT
 %{?with_static:install -d $RPM_BUILD_ROOT/bin}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %{?with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
 
@@ -214,19 +236,22 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc BUGS README TODO doc
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libexecdir}/libdar.so.*.*.*
+%attr(755,root,root) %{_libdir}/libdar.so.*.*.*
 %{_datadir}/%{name}
 %{_mandir}/man1/*
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libdar.so
+%{_libdir}/libdar.la
 %{_includedir}/dar
-%{?with_static:%{_libexecdir}/*.la}
-%attr(755,root,root) %{_libexecdir}/*.so
 
 %if %{with static}
 %files static
 %defattr(644,root,root,755)
 %attr(755,root,root) /bin/*
-%{_libexecdir}/*.a
 %endif
+
+%files libs-static
+%defattr(644,root,root,755)
+%{_libdir}/libdar.a
