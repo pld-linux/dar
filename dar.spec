@@ -14,7 +14,7 @@ Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
 BuildRequires:	attr-devel
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
 %ifarch alpha
@@ -22,7 +22,7 @@ BuildRequires:	bzip2-devel
 BuildRequires:	gcc-c++ >= 5:3.3.2-0.3
 %endif
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	zlib-devel
 %if %{with static}
 BuildRequires:	attr-static
@@ -181,7 +181,7 @@ Statyczna wersja archiwizatora dar.
 Summary:        Header files to develop dar software
 Summary(pl):    Pliki nag³ówkowe biblioteki dar
 Group:          Development/Libraries
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 Header files to develop software which operates on dar.
@@ -194,7 +194,7 @@ dara.
 Summary:	Static version of dar library
 Summary(pl):	Statyczna wersja biblioteki dar
 Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}
+Requires:       %{name}-devel = %{version}-%{release}
 
 %description libs-static
 Static version of dar library.
