@@ -181,7 +181,7 @@ Statyczna wersja archiwizatora dar.
 %package libs
 Summary:	Shared version of dar library
 Summary(pl):	Wspó³dzielona wersja biblioteki dar
-Group:          Libraries
+Group:		Libraries
 
 %description libs
 Shared version of dar library.
@@ -190,10 +190,10 @@ Shared version of dar library.
 Wspó³dzielona wersja biblioteki dar.
 
 %package devel
-Summary:        Header files to develop dar software
-Summary(pl):    Pliki nag³ówkowe biblioteki dar
-Group:          Development/Libraries
-Requires:       %{name}-libs = %{version}-%{release}
+Summary:	Header files to develop dar software
+Summary(pl):	Pliki nag³ówkowe biblioteki dar
+Group:		Development/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 Header files to develop software which operates on dar.
@@ -205,8 +205,8 @@ dara.
 %package libs-static
 Summary:	Static version of dar library
 Summary(pl):	Statyczna wersja biblioteki dar
-Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}-%{release}
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description libs-static
 Static version of dar library.
