@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_without	ea		# build without support for linux extented attributes
 %bcond_without	static	# build without dar_static
 #
 Summary:	dar makes backup of a directory tree and files
@@ -13,7 +14,7 @@ Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # Source0-md5:	032306021f6a66ef060260acd39da3dd
 Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
-BuildRequires:	attr-devel >= 2.4.16-3
+%{?with_ea:BuildRequires:	attr-devel >= 2.4.16-3}
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
@@ -25,7 +26,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	zlib-devel
 %if %{with static}
-BuildRequires:	attr-static
+%{?with_ea:BuildRequires:	attr-static}
 BuildRequires:	bzip2-static
 BuildRequires:	glibc-static
 BuildRequires:	libstdc++-static
@@ -225,8 +226,8 @@ Statyczna wersja biblioteki dar.
 %{__autoheader}
 %{__automake}
 %configure \
-	--enable-ea-support \
-%{!?with_static:--disable-dar-static} \
+	%{?with_ea:--enable-ea-support} \
+	%{!?with_static:--disable-dar-static} \
 	--disable-upx
 %{__make}
 
