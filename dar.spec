@@ -26,7 +26,7 @@ BuildRequires:	gcc-c++ >= 5:3.3.2-0.3
 BuildRequires:	gettext-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
-BuildRequires:	openssl-devel
+BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	zlib-devel
 %if %{with static}
 %{?with_ea:BuildRequires:	attr-static}
