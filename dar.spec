@@ -6,12 +6,12 @@
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
-Version:	2.1.5
+Version:	2.2.0
 Release:	0.1
 License:	GPL v2
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-# Source0-md5:	897c9dbc6d353a5e021f34dd3ef53813
+# Source0-md5:	d7bdec2b4abd4bdc550f556ace3b9ec8
 Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
 %{?with_ea:BuildRequires:	attr-devel >= 2.4.16-3}
@@ -229,7 +229,7 @@ Statyczna wersja biblioteki dar.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{?with_ea:--enable-ea-support} \
+	%{!?with_ea:--disable-ea-support} \
 	%{!?with_static:--disable-dar-static} \
 	--disable-upx
 %{__make}
@@ -245,13 +245,15 @@ rm -rf $RPM_BUILD_ROOT
 
 find $RPM_BUILD_DIR/%{name}-%{version}/doc -name "Makefile*" | xargs rm -fv
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc BUGS README TODO doc
 %attr(755,root,root) %{_bindir}/*
