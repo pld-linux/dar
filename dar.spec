@@ -202,6 +202,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 %{?with_ea:Requires:	attr-devel >= 2.4.16-3}
 Requires:	bzip2-devel
 Requires:	libstdc++-devel
+Requires:	openssl-devel
 
 %description devel
 Header files to develop software which operates on dar.
