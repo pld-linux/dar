@@ -165,7 +165,7 @@ katalogów i plików. Mo¿liwo¶ci:
   ró¿nicowego backupu.
 - Przekszta³canie czê¶ci istniej±cego archiwum: zewnêtrzny program o
   nazwie dar_xform jest w stanie zmieniaæ rozmiary czê¶ci podanego
-  archiwum. Mo¿e czytaæ z zestawu kata³ków, standardowego wej¶cia lub
+  archiwum. Mo¿e czytaæ z zestawu kawa³ków, standardowego wej¶cia lub
   nazwanej rurki.
 
 %package static
