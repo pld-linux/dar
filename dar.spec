@@ -22,14 +22,17 @@ BuildRequires:	bzip2-devel
 # ICE in 3.3.x up to 3.3.2 - require patched version
 BuildRequires:	gcc-c++ >= 5:3.3.2-0.3
 %endif
+BuildRequires:	gettext-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
+BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
 %if %{with static}
 %{?with_ea:BuildRequires:	attr-static}
 BuildRequires:	bzip2-static
 BuildRequires:	glibc-static
 BuildRequires:	libstdc++-static
+BuildRequires:	openssl-static
 BuildRequires:	zlib-static
 %endif
 Requires:	%{name}-libs = %{version}-%{release}
