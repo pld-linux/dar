@@ -1,12 +1,12 @@
 #
 # Conditional build:
-# _with_static         build dar_static
+# {!?_without_static	build without dar_static
 #
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	1.3.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -17,7 +17,7 @@ BuildRequires:	attr-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	zlib-devel
-%if %{?_with_static:1}0
+%if %{!?_without_static:1}0
 BuildRequires:	attr-static
 BuildRequires:	bzip2-static
 BuildRequires:	glibc-static
@@ -176,7 +176,7 @@ Statyczna wersja archiwizatora dar.
 
 %build
 %{__make} \
-%if %{?_with_static:1}0
+%if %{!?_without_static:1}0
 	BUILD_STATIC=\"yes\" \
 %else
 	BUILD_STATIC=\"no\" \
@@ -187,10 +187,10 @@ Statyczna wersja archiwizatora dar.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{?_with_static:install -d $RPM_BUILD_ROOT/bin}
+%{!?_without_static:install -d $RPM_BUILD_ROOT/bin}
 
 %{__make} install \
-%if %{?_with_static:1}0
+%if %{!?_without_static:1}0
 	BUILD_STATIC=\"yes\" \
 %else
 	BUILD_STATIC=\"no\" \
@@ -200,7 +200,7 @@ rm -rf $RPM_BUILD_ROOT
 	BIN_DIR=%{_bindir} \
 	MAN_DIR=%{_mandir}
 
-%{?_with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
+%{!?_without_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -211,7 +211,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
 
-%if %{?_with_static:1}0
+%if %{!?_without_static:1}0
 %files static
 %defattr(644,root,root,755)
 %attr(755,root,root) /bin/*
