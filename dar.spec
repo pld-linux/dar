@@ -17,6 +17,10 @@ BuildRequires:	attr-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
+%ifarch alpha
+# ICE in 3.3.x up to 3.3.2 - require patched version
+BuildRequires:	gcc-c++ >= 5:3.3.2-0.3
+%endif
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	zlib-devel
@@ -28,9 +32,6 @@ BuildRequires:	libstdc++-static
 BuildRequires:	zlib-static
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# workaround for gcc bug optimization/12965 (should be fixed in 3.3.3)
-%define		specflags_alpha		-O
 
 %description
 dar is a shell command, that makes backup of a directory tree and
