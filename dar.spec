@@ -7,7 +7,7 @@ Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	2.1.4
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -195,6 +195,9 @@ Summary:	Header files to develop dar software
 Summary(pl):	Pliki nag³ówkowe biblioteki dar
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+%{?with_ea:Requires:	attr-devel >= 2.4.16-3}
+Requires:	bzip2-devel
+Requires:	libstdc++-devel
 
 %description devel
 Header files to develop software which operates on dar.
