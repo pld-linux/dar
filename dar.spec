@@ -226,7 +226,7 @@ Statyczna wersja biblioteki dar.
 %{__automake}
 %configure \
 	--enable-ea-support \
-%{?without_static:--disable-dar-static} \
+%{!?with_static:--disable-dar-static} \
 	--disable-upx
 %{__make}
 
