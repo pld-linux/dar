@@ -1,4 +1,5 @@
 Summary:	dar makes backup of a directory tree and files
+Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	1.1.0
 Release:	1
@@ -7,12 +8,11 @@ Group:		Applications
 Source0:	http://dar.linux.free.fr/%{name}-%{version}.tar.gz
 URL:		http://dar.linux.free.fr/
 BuildRequires:	glibc-static
-BuildRequires:	zlib-static
 BuildRequires:	libstdc++-static
+BuildRequires:	zlib-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-
 dar is a shell command, that makes backup of a directory tree and
 files.
 
@@ -107,11 +107,48 @@ The resulting archive is totally identical to archives directly
 created by dar. Source archive can be taken from a set of slice, from
 standard input or even a named pipe.
 
+%description -l pl
+dar jest poleceniem pow³oki, które tworzy kopie zapasowe drzew
+katalogów i plików. Mo¿liwo¶ci:
+- Filtry: dar mo¿e tworzyæ kopiê zapasow± ca³ego systemu plików do
+  pojedynczego pliku; mechanizm filtrów pozwala wy³±czaæ lub do³±czaæ
+  pliki przy tworzeniu kopii lub odtwarzaniu z niej.
+- Backup ró¿nicowy: dar mo¿e tworzyæ kopie pe³ne lub ró¿nicowe
+  (zawieraj±ce tylko te pliki, które zmieni³y siê od innego backupu)
+- Czê¶ci (slices): dar oznacza "Disk ARchive". Od pocz±tku ma
+  mo¿liwo¶æ dzielenia archiwów na ró¿ne no¶niki wymienialne,
+  niezale¿nie od ich liczby i rozmiaru (mo¿na tworzyæ kopie na CD-R,
+  DVD-R, CD-RW, Zip, Jazz...).
+- Kompresja: domy¶lnie dar nie kompresuje danych; ma zaimplementowany
+  algorytm gzip, jest przygotowywany do bzip2 i innych. Kompresja jest
+  wykonywana przed podzia³em na czê¶ci.
+- Bezpo¶redni dostêp: nawet w przypadku u¿ycia kompresji, dar nie musi
+  czytaæ ca³ej kopii aby odtworzyæ jeden plik. Najpierw odczytuje
+  katalog, nastêpnie skacze od razu do w³a¶ciwego miejsca.
+- Obs³uga twardych dowi±zañ: dar zachowuje i odtwarza je w miarê
+  mo¿liwo¶ci; w przypadku niemo¿liwo¶ci wykonania dowi±zania, powiela
+  plik i wypisuje ostrze¿enie.
+- Obs³uga rozszerzonych atrybutów (zale¿nie od opcji kompilacji): dar
+  potrafi zachowywaæ i odtwarzaæ rozszerzone atrubuty - wszystkie lub
+  tylko dotycz±ce danej przestrzeni nazw (systemowej lub u¿ytkownika).
+- Testowanie archiwów: dziêki u¿yciu CRC dar wykrywa uszkodzone dane;
+  tylko uszkodzone pliki nie zostan± odtworzone, reszta tak - nawet w
+  przypadku u¿ycia kompresji.
+- U¿ycie rurek - dar mo¿e wyprodukowaæ archiwum na standardowe wyj¶cie
+  lub do nazwanej rurki. Mo¿e tak¿e czytaæ archiwum z pary rurek, a
+  nawet odtwarzaæ ze zdalnego archiwum.
+- Rozdzielenie: katalog (zawarto¶æ archiwum) mo¿e byæ wyci±gniêty do
+  ma³ego pliku, który mo¿e byæ u¿ywany jako odniesienie dla
+  ró¿nicowego backupu.
+- Przekszta³canie czê¶ci istniej±cego archiwum: zewnêtrzny program o
+  nazwie dar_xform jest w stanie zmieniaæ rozmiary czê¶ci podanego
+  archiwum. Mo¿e czytaæ z zestawu kata³ków, standardowego wej¶cia lub
+  nazwanej rurki.
+
 %prep
 %setup -q
 
 %build
-
 %{__make}
 
 %install
