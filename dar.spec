@@ -6,7 +6,7 @@ Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	2.1.0
-Release:	0.1
+Release:	0.2
 License:	GPL v2
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -30,6 +30,7 @@ BuildRequires:	bzip2-static
 BuildRequires:	glibc-static
 BuildRequires:	libstdc++-static
 BuildRequires:	zlib-static
+Requires:	%{name}-libs = %{version}-%{release}
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -190,6 +191,17 @@ Header files to develop software which operates on dar.
 Pliki nag³ówkowe potrzebne do rozwoju oprogramowania korzystaj±cego z
 dara.
 
+%package libs
+Summary:	Shared version of dar library
+Summary(pl):	Wspó³dzielona wersja biblioteki dar
+Group:          Libraries
+
+%description libs
+Shared version of dar library.
+
+%description libs -l pl
+Wspó³dzielona wersja biblioteki dar.
+
 %package libs-static
 Summary:	Static version of dar library
 Summary(pl):	Statyczna wersja biblioteki dar
@@ -237,9 +249,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc BUGS README TODO doc
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/libdar.so.*.*.*
 %{_datadir}/%{name}
 %{_mandir}/man1/*
+
+%files libs
+%attr(755,root,root) %{_libdir}/libdar.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
