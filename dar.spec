@@ -239,6 +239,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{?with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
 
+find $RPM_BUILD_DIR/%{name}-%{version}/doc -name "Makefile*" | xargs rm -fv
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
