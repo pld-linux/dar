@@ -1,18 +1,13 @@
---- dar-2.0.0/configure.ac.orig	2003-11-03 15:21:02.000000000 +0100
-+++ dar-2.0.0/configure.ac	2003-11-10 02:47:04.252495048 +0100
-@@ -145,13 +145,11 @@
+--- dar-2.1.0/configure.ac.orig	2004-03-02 21:46:54.000000000 +0100
++++ dar-2.1.0/configure.ac	2004-03-02 21:50:21.000000000 +0100
+@@ -151,8 +151,8 @@
  AC_ARG_ENABLE( [debug],
                  AC_HELP_STRING(--enable-debug, [build targets with debugging option and no optimization]),
                  [
--                        CXXFLAGS="-g -Wall"
+-	                CXXFLAGS="-g -Wall"
 -                        CFLAGS="-g -Wall"
-+                        CXXFLAGS="$CXXFLAGS -Wall"
-+                        CFLAGS="$CFLAGS -Wall"
++			CXXFLAGS="$CXXFLAGS -Wall"
++			CFLAGS="$CFLAGS -Wall"
                          debug_static="yes"
                  ],
                  [
--                        CXXFLAGS=-O
--                        CFLAGS=-O
-                         debug_static="no"
-                 ])
- 
