@@ -203,6 +203,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	bzip2-devel
 Requires:	libstdc++-devel
 Requires:	openssl-devel
+Requires:	zlib-devel
 
 %description devel
 Header files to develop software which operates on dar.
