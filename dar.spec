@@ -30,8 +30,8 @@ BuildRequires:	bzip2-static
 BuildRequires:	glibc-static
 BuildRequires:	libstdc++-static
 BuildRequires:	zlib-static
-Requires:	%{name}-libs = %{version}-%{release}
 %endif
+Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -178,19 +178,6 @@ Static version of dar backup tool.
 %description static -l pl
 Statyczna wersja archiwizatora dar.
 
-%package devel
-Summary:        Header files to develop dar software
-Summary(pl):    Pliki nag³ówkowe biblioteki dar
-Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description devel
-Header files to develop software which operates on dar.
-
-%description devel -l pl
-Pliki nag³ówkowe potrzebne do rozwoju oprogramowania korzystaj±cego z
-dara.
-
 %package libs
 Summary:	Shared version of dar library
 Summary(pl):	Wspó³dzielona wersja biblioteki dar
@@ -201,6 +188,19 @@ Shared version of dar library.
 
 %description libs -l pl
 Wspó³dzielona wersja biblioteki dar.
+
+%package devel
+Summary:        Header files to develop dar software
+Summary(pl):    Pliki nag³ówkowe biblioteki dar
+Group:          Development/Libraries
+Requires:       %{name}-libs = %{version}-%{release}
+
+%description devel
+Header files to develop software which operates on dar.
+
+%description devel -l pl
+Pliki nag³ówkowe potrzebne do rozwoju oprogramowania korzystaj±cego z
+dara.
 
 %package libs-static
 Summary:	Static version of dar library
@@ -242,8 +242,8 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -253,6 +253,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %files libs
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdar.so.*.*.*
 
 %files devel
