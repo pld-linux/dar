@@ -1,0 +1,23 @@
+--- dar-1.2.1/Makefile~	Sat Apr  5 09:07:03 2003
++++ dar-1.2.1/Makefile	Sat Apr  5 09:07:03 2003
+@@ -125,9 +125,9 @@
+ endif
+ 
+ ifeq ($(BUILD_STATIC), "yes")
+-BUILD_STATIC = dar_static
++STATIC_OPTS = dar_static
+ else
+-BUILD_STATIC =
++STATIC_OPTS =
+ endif
+ 
+ CPPFLAGS_COMMON = $(OPTIMIZATION) $(FILEOFFSET) $(USE_SYS_SIGLIST) $(FORCE_OS_BITS) -Wall # -pedantic -DTEST_MEMORY 
+@@ -159,7 +159,7 @@
+ LIBS_MANAGER = $(LIBS_COMMON)
+ ALL_SRC = storage.cpp infinint.cpp deci.cpp erreurs.cpp generic_file.cpp compressor.cpp user_interaction.cpp sar.cpp header.cpp tools.cpp path.cpp mask.cpp tronc.cpp catalogue.cpp filesystem.cpp filtre.cpp dar.cpp command_line.cpp terminateur.cpp defile.cpp test_memory.cpp ea.cpp ea_filesystem.cpp header_version.cpp test_deci.cpp test_infinint.cpp factoriel.cpp test_erreurs.cpp test_compressor.cpp test_sar.cpp test_path.cpp test_mask.cpp test_tronc.cpp test_catalogue.cpp test_filesystem.cpp testtools.cpp test_terminateur.cpp dar_xform.cpp sar_tools.cpp dar_suite.cpp tuyau.cpp dar_slave.cpp zapette.cpp test_tuyau.cpp scrambler.cpp test_scrambler.cpp etage.cpp data_tree.cpp macro_tools.cpp database.cpp database_header.cpp dar_manager.cpp prime.cpp
+ 
+-CIBLE = dar dar_xform dar_slave dar_manager $(BUILD_STATIC)
++CIBLE = dar dar_xform dar_slave dar_manager $(STATIC_OPTS)
+ 
+ default : $(CIBLE)
+ 
