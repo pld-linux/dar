@@ -191,7 +191,7 @@ rm -rf $RPM_BUILD_ROOT
 	BIN_DIR=%{_bindir} \
 	MAN_DIR=%{_mandir}
 
-%{?_with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar-static}
+%{?_with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
