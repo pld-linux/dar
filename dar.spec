@@ -10,6 +10,7 @@ Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+# Source0-md5:	03a2847399640dc2246c48de9f1e32a0
 Patch0:		%{name}-nostatic_compilation.patch
 URL:		http://dar.linux.free.fr/
 %if %{?_with_static:1}0
