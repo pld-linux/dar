@@ -1,11 +1,11 @@
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
-Version:	1.1.0
+Version:	1.2.1
 Release:	1
 License:	GPL
 Group:		Applications
-Source0:	http://dar.linux.free.fr/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 URL:		http://dar.linux.free.fr/
 BuildRequires:	glibc-static
 BuildRequires:	libstdc++-static
