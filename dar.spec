@@ -1,3 +1,7 @@
+#
+# Conditional build:
+# _with_static         build dar_static
+#
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
@@ -8,6 +12,11 @@ Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		%{name}-nostatic_compilation.patch
 URL:		http://dar.linux.free.fr/
+%if %{?_with_static:1}0
+BuildRequires:	glibc-static
+BuildRequires:	libstdc++-static
+BuildRequires:	zlib-static
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -143,20 +152,46 @@ katalogów i plików. Mo¿liwo¶ci:
   archiwum. Mo¿e czytaæ z zestawu kata³ków, standardowego wej¶cia lub
   nazwanej rurki.
 
+%package static
+Summary:        Static version of dar backup tool
+Summary(pl):    Statyczna wersja archiwizatora dar
+Group:		Applications
+
+%description static
+Static version of dar backup tool.
+
+%description static -l pl
+Statyczna wersja archiwizatora dar.
+
 %prep
 %setup -q
 %patch0 -p1
 
 %build
-%{__make} BUILD_STATIC="no" OPTIMIZATION="%{rpmcflags}"
+%{__make} \
+%if %{?_with_static:1}0
+	BUILD_STATIC=\"yes\" \
+%else
+	BUILD_STATIC=\"no\" \
+%endif
+	OPTIMIZATION="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install BUILD_STATIC="no" \
+%{?_with_static:install -d $RPM_BUILD_ROOT/bin}
+
+%{__make} install \
+%if %{?_with_static:1}0
+	BUILD_STATIC=\"yes\" \
+%else
+	BUILD_STATIC=\"no\" \
+%endif
 	INSTALL=install \
 	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT \
 	BIN_DIR=%{_bindir} \
 	MAN_DIR=%{_mandir}
+
+%{?_with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar-static}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -166,3 +201,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc BUGS CHANGES NOTES README TODO TUTORIAL
 %attr(755,root,root) %{_bindir}/*
 %attr(644,root,root) %{_mandir}/*
+
+%if %{?_with_static:1}0
+%files static
+%defattr(644,root,root,755)
+%attr(755,root,root) /bin/*
+%endif
