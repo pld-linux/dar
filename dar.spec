@@ -5,13 +5,12 @@
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
-Version:	1.3.0
-Release:	3
+Version:	2.0.0
+Release:	0.1
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-# Source0-md5:	7b2bb7aab490628153f1c9026536d903
-Patch0:		%{name}-nostatic_compilation.patch
+# Source0-md5:	a2f8f8a10d49d06d848ec794d7db65e8
 URL:		http://dar.linux.free.fr/
 BuildRequires:	attr-devel
 BuildRequires:	bzip2-devel
@@ -170,49 +169,64 @@ Static version of dar backup tool.
 %description static -l pl
 Statyczna wersja archiwizatora dar.
 
+%package devel
+Summary:        Header files and libraries to develop dar software
+Summary(pl):    Pliki nag³ówkowe i biblioteki
+Group:          Development/Libraries
+Requires:       %{name} = %{version}
+
+%description devel
+Header files and libraries to develop software which operates on dar.
+
+%description devel -l pl
+Pliki nag³ówkowe i biblioteki potrzebne do rozwoju oprogramowania dar.
+
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-%{__make} \
-%if %{with static}
-	BUILD_STATIC=\"yes\" \
-%else
-	BUILD_STATIC=\"no\" \
-%endif
-	OPTIMIZATION="%{rpmcflags}" \
-	EA_SUPPORT=yes \
-	FILEOFFSET="-D_FILE_OFFSET_BITS=64"
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure \
+	--enable-ea-support \
+%{?without_static:--disable-dar-static} \
+	--disable-upx
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{?with_static:install -d $RPM_BUILD_ROOT/bin}
 
-%{__make} install \
-%if %{with static}
-	BUILD_STATIC=\"yes\" \
-%else
-	BUILD_STATIC=\"no\" \
-%endif
-	INSTALL=install \
-	INSTALL_ROOT_DIR=$RPM_BUILD_ROOT \
-	BIN_DIR=%{_bindir} \
-	MAN_DIR=%{_mandir}
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 %{?with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
-%doc BUGS CHANGES NOTES README TODO TUTORIAL
+%doc BUGS README TODO doc
 %attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_libexecdir}/libdar.so.*.*.*
+%{_datadir}/%{name}
 %{_mandir}/man1/*
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/dar
+%{?with_static:%{_libexecdir}/*.la}
+%attr(755,root,root) %{_libexecdir}/*.so
 
 %if %{with static}
 %files static
 %defattr(644,root,root,755)
 %attr(755,root,root) /bin/*
+%{_libexecdir}/*.a
 %endif
