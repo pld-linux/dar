@@ -154,8 +154,8 @@ katalogów i plików. Mo¿liwo¶ci:
   nazwanej rurki.
 
 %package static
-Summary:        Static version of dar backup tool
-Summary(pl):    Statyczna wersja archiwizatora dar
+Summary:	Static version of dar backup tool
+Summary(pl):	Statyczna wersja archiwizatora dar
 Group:		Applications
 
 %description static
