@@ -6,14 +6,20 @@ Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	1.3.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # Source0-md5:	7b2bb7aab490628153f1c9026536d903
 Patch0:		%{name}-nostatic_compilation.patch
 URL:		http://dar.linux.free.fr/
+BuildRequires:	attr-devel
+BuildRequires:	bzip2-devel
+BuildRequires:	libstdc++-devel
+BuildRequires:	zlib-devel
 %if %{?_with_static:1}0
+BuildRequires:	attr-static
+BuildRequires:	bzip2-static
 BuildRequires:	glibc-static
 BuildRequires:	libstdc++-static
 BuildRequires:	zlib-static
@@ -175,7 +181,9 @@ Statyczna wersja archiwizatora dar.
 %else
 	BUILD_STATIC=\"no\" \
 %endif
-	OPTIMIZATION="%{rpmcflags}"
+	OPTIMIZATION="%{rpmcflags}" \
+	EA_SUPPORT=yes \
+	FILEOFFSET="-D_FILE_OFFSET_BITS=64"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -201,7 +209,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc BUGS CHANGES NOTES README TODO TUTORIAL
 %attr(755,root,root) %{_bindir}/*
-%attr(644,root,root) %{_mandir}/*
+%{_mandir}/man1/*
 
 %if %{?_with_static:1}0
 %files static
