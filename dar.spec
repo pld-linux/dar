@@ -152,7 +152,7 @@ katalogów i plików. Mo¿liwo¶ci:
   mo¿liwo¶ci; w przypadku niemo¿liwo¶ci wykonania dowi±zania, powiela
   plik i wypisuje ostrze¿enie.
 - Obs³uga rozszerzonych atrybutów (zale¿nie od opcji kompilacji): dar
-  potrafi zachowywaæ i odtwarzaæ rozszerzone atrubuty - wszystkie lub
+  potrafi zachowywaæ i odtwarzaæ rozszerzone atrybuty - wszystkie lub
   tylko dotycz±ce danej przestrzeni nazw (systemowej lub u¿ytkownika).
 - Testowanie archiwów: dziêki u¿yciu CRC dar wykrywa uszkodzone dane;
   tylko uszkodzone pliki nie zostan± odtworzone, reszta tak - nawet w
