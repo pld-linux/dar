@@ -14,7 +14,7 @@ Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
 BuildRequires:	attr-devel
-BuildRequires:	autoconf >= 2.54
+BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
 %ifarch alpha
