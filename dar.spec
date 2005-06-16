@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	ea		# build without support for linux extented attributes
 %bcond_without	static		# build without dar_static
+%bcond_without	static_libs	# don't build static libraries
 #
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
@@ -237,6 +238,7 @@ Statyczna wersja biblioteki dar.
 %configure \
 	%{!?with_ea:--disable-ea-support} \
 	%{!?with_static:--disable-dar-static} \
+	%{!?with_static_libs:--disable-static} \
 	--enable-mode=64 \
 	--disable-upx
 %{__make}
@@ -283,6 +285,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /bin/*
 %endif
 
+%if %{with static_libs}
 %files libs-static
 %defattr(644,root,root,755)
 %{_libdir}/libdar64.a
+%endif
