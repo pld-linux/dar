@@ -7,12 +7,12 @@
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
-Version:	2.2.6
+Version:	2.3.0
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-# Source0-md5:	4cc1befb9052783b30819102cbd505d2
+# Source0-md5:	db33f61b31fcdb84d13205a96c3d7771
 Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
 %{?with_ea:BuildRequires:	attr-devel >= 2.4.16-3}
@@ -25,6 +25,7 @@ BuildRequires:	doxygen >= 1:1.3
 BuildRequires:	gcc-c++ >= 5:3.3.2-0.3
 %endif
 BuildRequires:	gettext-devel
+BuildRequires:	groff
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	openssl-devel >= 0.9.7d
@@ -252,7 +253,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %{?with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
 
-find $RPM_BUILD_DIR/%{name}-%{version}/doc -name "Makefile*" | xargs rm -fv
+find $RPM_BUILD_DIR/%{name}-%{version}/doc -name "Makefile*" -o -name "Doxyfile*" -o -name dar-catalog-1.0.dtd | xargs rm -f
+mkdir -p devel-doc
+mv -f doc/html/* devel-doc
+rm -rf doc/html
 
 %find_lang %{name}
 
@@ -264,7 +268,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc BUGS README TODO doc
+%doc ChangeLog NEWS README THANKS TODO doc
 %attr(755,root,root) %{_bindir}/*
 %{_datadir}/%{name}
 %{_mandir}/man1/*
@@ -275,9 +279,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%doc devel-doc/*
 %attr(755,root,root) %{_libdir}/libdar64.so
 %{_libdir}/libdar64.la
 %{_includedir}/dar
+%{_pkgconfigdir}/libdar64.pc
 
 %if %{with static}
 %files static
