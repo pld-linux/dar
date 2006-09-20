@@ -226,6 +226,18 @@ Static version of dar library.
 %description libs-static -l pl
 Statyczna wersja biblioteki dar.
 
+%package doc
+Summary:	dar - documentation
+Summary(pl):	dar - dokumentacja
+Group:		Documentation
+Requires:	%{name} = %{version}-%{release}
+
+%description doc
+Dar ducumentation.
+
+%description -l pl
+Dokumentacja dla dar.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -253,10 +265,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{?with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
 
-find $RPM_BUILD_DIR/%{name}-%{version}/doc -name "Makefile*" -o -name "Doxyfile*" -o -name dar-catalog-1.0.dtd | xargs rm -f
-mkdir -p devel-doc
-mv -f doc/html/* devel-doc
-rm -rf doc/html
+ln -sf %{_datadir}/%{name} misc/doc
 
 %find_lang %{name}
 
@@ -268,9 +277,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog NEWS README THANKS TODO doc
+%doc ChangeLog NEWS README THANKS TODO misc/doc
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/%{name}
 %{_mandir}/man1/*
 
 %files libs
@@ -279,7 +287,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc devel-doc/*
 %attr(755,root,root) %{_libdir}/libdar64.so
 %{_libdir}/libdar64.la
 %{_includedir}/dar
@@ -296,3 +303,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libdar64.a
 %endif
+
+%files doc
+%defattr(644,root,root,755)
+%{_datadir}/%{name}
