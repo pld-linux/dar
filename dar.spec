@@ -4,6 +4,10 @@
 %bcond_without	static		# build without dar_static
 %bcond_without	static_libs	# don't build static libraries
 #
+%if %{with static}
+%define with_static_libs 1
+%endif
+#
 Summary:	dar makes backup of a directory tree and files
 Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
@@ -40,6 +44,9 @@ BuildRequires:	zlib-static
 %endif
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# don't generate `Requires' for sample scripts
+%define	_noautoreq bash perl
 
 %description
 dar is a shell command, that makes backup of a directory tree and
@@ -243,6 +250,7 @@ Dokumentacja dla dar.
 %patch0 -p1
 
 %build
+%{__gettextize}
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
@@ -251,7 +259,7 @@ Dokumentacja dla dar.
 %configure \
 	%{!?with_ea:--disable-ea-support} \
 	%{!?with_static:--disable-dar-static} \
-	%{!?with_static_libs:--disable-static} \
+	--enable-static=%{?with_static_libs:yes}%{!?with_static_libs:no} \
 	--enable-mode=64 \
 	--disable-upx
 %{__make}
