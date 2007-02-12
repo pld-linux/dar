@@ -9,7 +9,7 @@
 %endif
 #
 Summary:	dar makes backup of a directory tree and files
-Summary(pl.UTF-8):   dar - narzędzie do tworzenia kopii zapasowych drzew katalogów i plików
+Summary(pl.UTF-8):	dar - narzędzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	2.3.1
 Release:	1
@@ -183,7 +183,7 @@ katalogów i plików. Możliwości:
 
 %package static
 Summary:	Static version of dar backup tool
-Summary(pl.UTF-8):   Statyczna wersja archiwizatora dar
+Summary(pl.UTF-8):	Statyczna wersja archiwizatora dar
 Group:		Applications
 
 %description static
@@ -194,7 +194,7 @@ Statyczna wersja archiwizatora dar.
 
 %package libs
 Summary:	Shared version of dar library
-Summary(pl.UTF-8):   Współdzielona wersja biblioteki dar
+Summary(pl.UTF-8):	Współdzielona wersja biblioteki dar
 Group:		Libraries
 
 %description libs
@@ -205,7 +205,7 @@ Współdzielona wersja biblioteki dar.
 
 %package devel
 Summary:	Header files to develop dar software
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki dar
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki dar
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_ea:Requires:	attr-devel >= 2.4.16-3}
@@ -223,7 +223,7 @@ dara.
 
 %package libs-static
 Summary:	Static version of dar library
-Summary(pl.UTF-8):   Statyczna wersja biblioteki dar
+Summary(pl.UTF-8):	Statyczna wersja biblioteki dar
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -235,7 +235,7 @@ Statyczna wersja biblioteki dar.
 
 %package doc
 Summary:	dar - documentation
-Summary(pl.UTF-8):   dar - dokumentacja
+Summary(pl.UTF-8):	dar - dokumentacja
 Group:		Documentation
 Requires:	%{name} = %{version}-%{release}
 
