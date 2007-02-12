@@ -9,7 +9,7 @@
 %endif
 #
 Summary:	dar makes backup of a directory tree and files
-Summary(pl):	dar - narzêdzie do tworzenia kopii zapasowych drzew katalogów i plików
+Summary(pl.UTF-8):   dar - narzÄ™dzie do tworzenia kopii zapasowych drzew katalogÃ³w i plikÃ³w
 Name:		dar
 Version:	2.3.1
 Release:	1
@@ -143,69 +143,69 @@ The resulting archive is totally identical to archives directly
 created by dar. Source archive can be taken from a set of slice, from
 standard input or even a named pipe.
 
-%description -l pl
-dar jest poleceniem pow³oki, które tworzy kopie zapasowe drzew
-katalogów i plików. Mo¿liwo¶ci:
-- Filtry: dar mo¿e tworzyæ kopiê zapasow± ca³ego systemu plików do
-  pojedynczego pliku; mechanizm filtrów pozwala wy³±czaæ lub do³±czaæ
+%description -l pl.UTF-8
+dar jest poleceniem powÅ‚oki, ktÃ³re tworzy kopie zapasowe drzew
+katalogÃ³w i plikÃ³w. MoÅ¼liwoÅ›ci:
+- Filtry: dar moÅ¼e tworzyÄ‡ kopiÄ™ zapasowÄ… caÅ‚ego systemu plikÃ³w do
+  pojedynczego pliku; mechanizm filtrÃ³w pozwala wyÅ‚Ä…czaÄ‡ lub doÅ‚Ä…czaÄ‡
   pliki przy tworzeniu kopii lub odtwarzaniu z niej.
-- Backup ró¿nicowy: dar mo¿e tworzyæ kopie pe³ne lub ró¿nicowe
-  (zawieraj±ce tylko te pliki, które zmieni³y siê od innego backupu)
-- Czê¶ci (slices): dar oznacza "Disk ARchive". Od pocz±tku ma
-  mo¿liwo¶æ dzielenia archiwów na ró¿ne no¶niki wymienialne,
-  niezale¿nie od ich liczby i rozmiaru (mo¿na tworzyæ kopie na CD-R,
+- Backup rÃ³Å¼nicowy: dar moÅ¼e tworzyÄ‡ kopie peÅ‚ne lub rÃ³Å¼nicowe
+  (zawierajÄ…ce tylko te pliki, ktÃ³re zmieniÅ‚y siÄ™ od innego backupu)
+- CzÄ™Å›ci (slices): dar oznacza "Disk ARchive". Od poczÄ…tku ma
+  moÅ¼liwoÅ›Ä‡ dzielenia archiwÃ³w na rÃ³Å¼ne noÅ›niki wymienialne,
+  niezaleÅ¼nie od ich liczby i rozmiaru (moÅ¼na tworzyÄ‡ kopie na CD-R,
   DVD-R, CD-RW, Zip, Jazz...).
-- Kompresja: domy¶lnie dar nie kompresuje danych; ma zaimplementowany
+- Kompresja: domyÅ›lnie dar nie kompresuje danych; ma zaimplementowany
   algorytm gzip, jest przygotowywany do bzip2 i innych. Kompresja jest
-  wykonywana przed podzia³em na czê¶ci.
-- Bezpo¶redni dostêp: nawet w przypadku u¿ycia kompresji, dar nie musi
-  czytaæ ca³ej kopii aby odtworzyæ jeden plik. Najpierw odczytuje
-  katalog, nastêpnie skacze od razu do w³a¶ciwego miejsca.
-- Obs³uga twardych dowi±zañ: dar zachowuje i odtwarza je w miarê
-  mo¿liwo¶ci; w przypadku niemo¿liwo¶ci wykonania dowi±zania, powiela
-  plik i wypisuje ostrze¿enie.
-- Obs³uga rozszerzonych atrybutów (zale¿nie od opcji kompilacji): dar
-  potrafi zachowywaæ i odtwarzaæ rozszerzone atrybuty - wszystkie lub
-  tylko dotycz±ce danej przestrzeni nazw (systemowej lub u¿ytkownika).
-- Testowanie archiwów: dziêki u¿yciu CRC dar wykrywa uszkodzone dane;
-  tylko uszkodzone pliki nie zostan± odtworzone, reszta tak - nawet w
-  przypadku u¿ycia kompresji.
-- U¿ycie rurek - dar mo¿e wyprodukowaæ archiwum na standardowe wyj¶cie
-  lub do nazwanej rurki. Mo¿e tak¿e czytaæ archiwum z pary rurek, a
-  nawet odtwarzaæ ze zdalnego archiwum.
-- Rozdzielenie: katalog (zawarto¶æ archiwum) mo¿e byæ wyci±gniêty do
-  ma³ego pliku, który mo¿e byæ u¿ywany jako odniesienie dla
-  ró¿nicowego backupu.
-- Przekszta³canie czê¶ci istniej±cego archiwum: zewnêtrzny program o
-  nazwie dar_xform jest w stanie zmieniaæ rozmiary czê¶ci podanego
-  archiwum. Mo¿e czytaæ z zestawu kawa³ków, standardowego wej¶cia lub
+  wykonywana przed podziaÅ‚em na czÄ™Å›ci.
+- BezpoÅ›redni dostÄ™p: nawet w przypadku uÅ¼ycia kompresji, dar nie musi
+  czytaÄ‡ caÅ‚ej kopii aby odtworzyÄ‡ jeden plik. Najpierw odczytuje
+  katalog, nastÄ™pnie skacze od razu do wÅ‚aÅ›ciwego miejsca.
+- ObsÅ‚uga twardych dowiÄ…zaÅ„: dar zachowuje i odtwarza je w miarÄ™
+  moÅ¼liwoÅ›ci; w przypadku niemoÅ¼liwoÅ›ci wykonania dowiÄ…zania, powiela
+  plik i wypisuje ostrzeÅ¼enie.
+- ObsÅ‚uga rozszerzonych atrybutÃ³w (zaleÅ¼nie od opcji kompilacji): dar
+  potrafi zachowywaÄ‡ i odtwarzaÄ‡ rozszerzone atrybuty - wszystkie lub
+  tylko dotyczÄ…ce danej przestrzeni nazw (systemowej lub uÅ¼ytkownika).
+- Testowanie archiwÃ³w: dziÄ™ki uÅ¼yciu CRC dar wykrywa uszkodzone dane;
+  tylko uszkodzone pliki nie zostanÄ… odtworzone, reszta tak - nawet w
+  przypadku uÅ¼ycia kompresji.
+- UÅ¼ycie rurek - dar moÅ¼e wyprodukowaÄ‡ archiwum na standardowe wyjÅ›cie
+  lub do nazwanej rurki. MoÅ¼e takÅ¼e czytaÄ‡ archiwum z pary rurek, a
+  nawet odtwarzaÄ‡ ze zdalnego archiwum.
+- Rozdzielenie: katalog (zawartoÅ›Ä‡ archiwum) moÅ¼e byÄ‡ wyciÄ…gniÄ™ty do
+  maÅ‚ego pliku, ktÃ³ry moÅ¼e byÄ‡ uÅ¼ywany jako odniesienie dla
+  rÃ³Å¼nicowego backupu.
+- PrzeksztaÅ‚canie czÄ™Å›ci istniejÄ…cego archiwum: zewnÄ™trzny program o
+  nazwie dar_xform jest w stanie zmieniaÄ‡ rozmiary czÄ™Å›ci podanego
+  archiwum. MoÅ¼e czytaÄ‡ z zestawu kawaÅ‚kÃ³w, standardowego wejÅ›cia lub
   nazwanej rurki.
 
 %package static
 Summary:	Static version of dar backup tool
-Summary(pl):	Statyczna wersja archiwizatora dar
+Summary(pl.UTF-8):   Statyczna wersja archiwizatora dar
 Group:		Applications
 
 %description static
 Static version of dar backup tool.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna wersja archiwizatora dar.
 
 %package libs
 Summary:	Shared version of dar library
-Summary(pl):	Wspó³dzielona wersja biblioteki dar
+Summary(pl.UTF-8):   WspÃ³Å‚dzielona wersja biblioteki dar
 Group:		Libraries
 
 %description libs
 Shared version of dar library.
 
-%description libs -l pl
-Wspó³dzielona wersja biblioteki dar.
+%description libs -l pl.UTF-8
+WspÃ³Å‚dzielona wersja biblioteki dar.
 
 %package devel
 Summary:	Header files to develop dar software
-Summary(pl):	Pliki nag³ówkowe biblioteki dar
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki dar
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_ea:Requires:	attr-devel >= 2.4.16-3}
@@ -217,32 +217,32 @@ Requires:	zlib-devel
 %description devel
 Header files to develop software which operates on dar.
 
-%description devel -l pl
-Pliki nag³ówkowe potrzebne do rozwoju oprogramowania korzystaj±cego z
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe potrzebne do rozwoju oprogramowania korzystajÄ…cego z
 dara.
 
 %package libs-static
 Summary:	Static version of dar library
-Summary(pl):	Statyczna wersja biblioteki dar
+Summary(pl.UTF-8):   Statyczna wersja biblioteki dar
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description libs-static
 Static version of dar library.
 
-%description libs-static -l pl
+%description libs-static -l pl.UTF-8
 Statyczna wersja biblioteki dar.
 
 %package doc
 Summary:	dar - documentation
-Summary(pl):	dar - dokumentacja
+Summary(pl.UTF-8):   dar - dokumentacja
 Group:		Documentation
 Requires:	%{name} = %{version}-%{release}
 
 %description doc
 Dar ducumentation.
 
-%description -l pl
+%description -l pl.UTF-8
 Dokumentacja dla dar.
 
 %prep
