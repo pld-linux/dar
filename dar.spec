@@ -243,7 +243,7 @@ Requires:	%{name} = %{version}-%{release}
 %description doc
 Dar ducumentation.
 
-%description -l pl.UTF-8
+%description doc -l pl.UTF-8
 Dokumentacja dla dar.
 
 %prep
