@@ -31,8 +31,8 @@ BuildRequires:	gcc-c++ >= 5:3.3.2-0.3
 %endif
 BuildRequires:	gettext-devel
 BuildRequires:	groff
-BuildRequires:	libgcrypt
-BuildRequires:	libgpg-error
+BuildRequires:	libgcrypt-devel
+BuildRequires:	libgpg-error-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	lzo-devel
