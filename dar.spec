@@ -15,7 +15,7 @@ Version:	2.4.9
 Release:	1
 License:	GPL v2
 Group:		Applications/Archiving
-Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/dar/%{name}-%{version}.tar.gz
 # Source0-md5:	c7e8d6c480c068a52dc8cdfca9c5f615
 Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
