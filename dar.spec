@@ -266,7 +266,7 @@ Dokumentacja dla dar.
 %configure \
 	%{!?with_ea:--disable-ea-support} \
 	%{!?with_static:--disable-dar-static} \
-	--enable-static=%{?with_static_libs:yes}%{!?with_static_libs:no} \
+	--enable-static%{!?with_static_libs:=no} \
 	--enable-mode=64 \
 	--disable-upx
 %{__make}
@@ -293,14 +293,15 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog NEWS README THANKS TODO misc/doc
+%attr(755,root,root) %{_bindir}/dar*
 %dir %{_datadir}/%{name}
-%attr(755,root,root) %{_bindir}/*
-%{_mandir}/man1/*.1*
+%{_mandir}/man1/dar*.1*
 %attr(644,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/darrc
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdar64.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libdar64.so.5000
 
 %files devel
 %defattr(644,root,root,755)
@@ -312,7 +313,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with static}
 %files static
 %defattr(644,root,root,755)
-%attr(755,root,root) /bin/*
+%attr(755,root,root) /bin/dar_static
 %endif
 
 %if %{with static_libs}
@@ -323,4 +324,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/*
+%{_datadir}/%{name}/html
+%{_datadir}/%{name}/man
+%{_datadir}/%{name}/mini-howto
+%{_datadir}/%{name}/samples
+%{_datadir}/%{name}/*.dtd
+%{_datadir}/%{name}/*.jpg
+%{_datadir}/%{name}/*.html
+%{_datadir}/%{name}/*.txt
+%{_datadir}/%{name}/README
