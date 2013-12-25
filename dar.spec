@@ -12,7 +12,7 @@ Summary:	dar makes backup of a directory tree and files
 Summary(pl.UTF-8):	dar - narzędzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
 Version:	2.4.10
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Archiving
 Source0:	http://downloads.sourceforge.net/dar/%{name}-%{version}.tar.gz
