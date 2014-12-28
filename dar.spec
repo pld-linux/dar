@@ -29,7 +29,7 @@ BuildRequires:	e2fsprogs-devel
 # ICE in 3.3.x up to 3.3.2 - require patched version
 BuildRequires:	gcc-c++ >= 5:3.3.2-0.3
 %endif
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	groff
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libgpg-error-devel
