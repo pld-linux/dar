@@ -1,7 +1,8 @@
+# TODO: libthreadar
 #
 # Conditional build:
-%bcond_without	ea		# build without support for linux extented attributes
-%bcond_without	static		# build without dar_static
+%bcond_without	ea		# support for Linux extented attributes
+%bcond_without	static		# dar_static program
 %bcond_without	static_libs	# don't build static libraries
 #
 %if %{with static}
@@ -11,32 +12,30 @@
 Summary:	dar makes backup of a directory tree and files
 Summary(pl.UTF-8):	dar - narzędzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
-Version:	2.4.10
-Release:	2
-License:	GPL v2
+Version:	2.5.9
+Release:	1
+License:	GPL v2+
 Group:		Applications/Archiving
 Source0:	http://downloads.sourceforge.net/dar/%{name}-%{version}.tar.gz
-# Source0-md5:	260efaaf3f996836f1f28f8a1e0ceb31
+# Source0-md5:	6448517104fc3afda1e245307a6905a9
 Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
 %{?with_ea:BuildRequires:	attr-devel >= 2.4.16-3}
-BuildRequires:	autoconf >= 2.59
+BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	doxygen >= 1:1.3
 BuildRequires:	e2fsprogs-devel
-%ifarch alpha
-# ICE in 3.3.x up to 3.3.2 - require patched version
-BuildRequires:	gcc-c++ >= 5:3.3.2-0.3
-%endif
 BuildRequires:	gettext-tools
+BuildRequires:	gpgme-devel >= 1.2.0
 BuildRequires:	groff
-BuildRequires:	libgcrypt-devel
+BuildRequires:	libcap-devel
+BuildRequires:	libgcrypt-devel >= 1.6.0
 BuildRequires:	libgpg-error-devel
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libtool >= 2:1.4d
-BuildRequires:	lzo-devel
-BuildRequires:	openssl-devel >= 0.9.7k
+BuildRequires:	lzo-devel >= 2
+BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
 %if %{with static}
 %{?with_ea:BuildRequires:	attr-static}
@@ -46,7 +45,6 @@ BuildRequires:	libgcrypt-static
 BuildRequires:	libgpg-error-static
 BuildRequires:	libstdc++-static
 BuildRequires:	lzo-static
-BuildRequires:	openssl-static
 BuildRequires:	zlib-static
 %endif
 Requires:	%{name}-libs = %{version}-%{release}
@@ -203,6 +201,9 @@ Statyczna wersja archiwizatora dar.
 Summary:	Shared version of dar library
 Summary(pl.UTF-8):	Współdzielona wersja biblioteki dar
 Group:		Libraries
+%{?with_ea:Requires:	attr >= 2.4.16-3}
+Requires:	gpgme >= 1.2.0
+Requires:	libgcrypt >= 1.6.0
 
 %description libs
 Shared version of dar library.
@@ -217,8 +218,13 @@ Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_ea:Requires:	attr-devel >= 2.4.16-3}
 Requires:	bzip2-devel
+Requires:	gpgme-devel
+Requires:	libcap-devel
+Requires:	libgcrypt-devel >= 1.6.0
+Requires:	libgpg-error-devel
 Requires:	libstdc++-devel
-Requires:	openssl-devel
+Requires:	lzo-devel >= 2
+Requires:	xz-devel
 Requires:	zlib-devel
 
 %description devel
@@ -278,9 +284,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{?with_static:mv -f $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
+%{?with_static:%{__mv} $RPM_BUILD_ROOT{%{_bindir},/bin}/dar_static}
 
 ln -sf %{_datadir}/%{name} misc/doc
+
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libdar64.la
 
 %find_lang %{name}
 
@@ -292,11 +301,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog NEWS README THANKS TODO misc/doc
+%doc AUTHORS ChangeLog NEWS README THANKS TODO misc/doc
 %attr(755,root,root) %{_bindir}/dar*
 %dir %{_datadir}/%{name}
 %{_mandir}/man1/dar*.1*
 %attr(644,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/darrc
+
+%if %{with static}
+%files static
+%defattr(644,root,root,755)
+%attr(755,root,root) /bin/dar_static
+%endif
 
 %files libs
 %defattr(644,root,root,755)
@@ -306,15 +321,8 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdar64.so
-%{_libdir}/libdar64.la
 %{_includedir}/dar
 %{_pkgconfigdir}/libdar64.pc
-
-%if %{with static}
-%files static
-%defattr(644,root,root,755)
-%attr(755,root,root) /bin/dar_static
-%endif
 
 %if %{with static_libs}
 %files libs-static

@@ -1,23 +1,19 @@
---- dar-2.2.2/configure.ac.orig	2005-05-08 18:32:26.000000000 +0200
-+++ dar-2.2.2/configure.ac	2005-05-24 00:18:13.000000000 +0200
-@@ -377,8 +377,8 @@
- AC_ARG_ENABLE( [debug],
-                 AC_HELP_STRING(--enable-debug, [build targets with debugging option and no optimization]),
-                 [
--                        CXXFLAGS="-ggdb -Wall"
--                        CFLAGS="-ggdb -Wall"
-+                        CXXFLAGS="$CXXFLAGS -Wall"
-+                        CFLAGS="$CFLAGS -Wall"
-                         debug_static="yes"
-                 ],
-                 [
---- dar-2.2.5/configure.ac~	2005-12-07 09:20:47.921524496 +0100
-+++ dar-2.2.5/configure.ac	2005-12-07 09:21:20.414584800 +0100
-@@ -16,7 +16,6 @@
+--- dar-2.5.9/configure.ac.orig	2017-01-21 11:59:32.000000000 +0100
++++ dar-2.5.9/configure.ac	2017-03-30 18:00:31.489079633 +0200
+@@ -30,7 +30,6 @@
  AC_PROG_CC
  AC_PROG_LIBTOOL
  AC_PROG_MAKE_SET
 -AC_PROG_RANLIB
  
- # Checks for libraries.
- AC_CHECK_LIB(socket, [socket], [], [])
+ AC_MSG_CHECKING([for C++ compiler usability])
+ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],
+@@ -888,7 +887,7 @@
+                 AC_HELP_STRING(--enable-debug, [build targets with debugging option and no optimization]),
+                 [
+ 		# yes we modify user variable here to remove any optimization
+-                        CXXFLAGS="$CXXSTDFLAGS -ggdb -Wall"
++                        CXXFLAGS="$CXXFLAGS -ggdb -Wall"
+                         CFLAGS="-ggdb -Wall"
+ 			LDFLAGS="-ggdb -Wall"
+                         debug_static="yes"
