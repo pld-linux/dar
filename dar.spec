@@ -1,9 +1,9 @@
-# TODO: libthreadar
 #
 # Conditional build:
 %bcond_without	ea		# support for Linux extented attributes
 %bcond_without	static		# dar_static program
-%bcond_without	static_libs	# don't build static libraries
+%bcond_without	static_libs	# static library
+%bcond_with	threads		# threading using libthreadar library (experimental)
 #
 %if %{with static}
 %define with_static_libs 1
@@ -33,6 +33,7 @@ BuildRequires:	libcap-devel
 BuildRequires:	libgcrypt-devel >= 1.6.0
 BuildRequires:	libgpg-error-devel
 BuildRequires:	libstdc++-devel >= 6:4.7
+%{?with_threads:BuildRequires:	libthreadar-devel > 1.0.1}
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	lzo-devel >= 2
 BuildRequires:	xz-devel
@@ -189,7 +190,7 @@ katalogów i plików. Możliwości:
 %package static
 Summary:	Static version of dar backup tool
 Summary(pl.UTF-8):	Statyczna wersja archiwizatora dar
-Group:		Applications
+Group:		Applications/Archiving
 
 %description static
 Static version of dar backup tool.
@@ -204,6 +205,7 @@ Group:		Libraries
 %{?with_ea:Requires:	attr >= 2.4.16-3}
 Requires:	gpgme >= 1.2.0
 Requires:	libgcrypt >= 1.6.0
+%{?with_threads:Requires:	libthreadar > 1.0.1}
 
 %description libs
 Shared version of dar library.
@@ -222,7 +224,8 @@ Requires:	gpgme-devel
 Requires:	libcap-devel
 Requires:	libgcrypt-devel >= 1.6.0
 Requires:	libgpg-error-devel
-Requires:	libstdc++-devel
+Requires:	libstdc++-devel >= 6:4.7
+%{?with_threads:Requires:	libthreadar-devel > 1.0.1}
 Requires:	lzo-devel >= 2
 Requires:	xz-devel
 Requires:	zlib-devel
@@ -270,10 +273,11 @@ Dokumentacja dla dar.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{!?with_ea:--disable-ea-support} \
 	%{!?with_static:--disable-dar-static} \
-	--enable-static%{!?with_static_libs:=no} \
+	%{!?with_ea:--disable-ea-support} \
 	--enable-mode=64 \
+	--enable-static%{!?with_static_libs:=no} \
+	%{?with_threads:--enable-threadar} \
 	--disable-upx
 %{__make}
 
