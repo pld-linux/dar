@@ -42,10 +42,13 @@ BuildRequires:	zlib-devel
 %{?with_ea:BuildRequires:	attr-static}
 BuildRequires:	bzip2-static
 BuildRequires:	glibc-static
+BuildRequires:	gpgme-static
+BuildRequires:	libassuan-static
 BuildRequires:	libgcrypt-static
 BuildRequires:	libgpg-error-static
 BuildRequires:	libstdc++-static
 BuildRequires:	lzo-static
+BuildRequires:	xz-static
 BuildRequires:	zlib-static
 %endif
 Requires:	%{name}-libs = %{version}-%{release}
