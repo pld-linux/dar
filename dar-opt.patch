@@ -1,6 +1,6 @@
---- dar-2.5.9/configure.ac.orig	2017-01-21 11:59:32.000000000 +0100
-+++ dar-2.5.9/configure.ac	2017-03-30 18:00:31.489079633 +0200
-@@ -30,7 +30,6 @@
+--- dar-2.7.14/configure.ac.orig	2024-03-23 12:43:29.000000000 +0100
++++ dar-2.7.14/configure.ac	2024-03-28 06:24:44.611456937 +0100
+@@ -67,7 +67,6 @@ AC_PROG_CXX
  AC_PROG_CC
  AC_PROG_LIBTOOL
  AC_PROG_MAKE_SET
@@ -8,12 +8,16 @@
  
  AC_MSG_CHECKING([for C++ compiler usability])
  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],
-@@ -888,7 +887,7 @@
-                 AC_HELP_STRING(--enable-debug, [build targets with debugging option and no optimization]),
-                 [
- 		# yes we modify user variable here to remove any optimization
--                        CXXFLAGS="$CXXSTDFLAGS -ggdb -Wall"
-+                        CXXFLAGS="$CXXFLAGS -ggdb -Wall"
-                         CFLAGS="-ggdb -Wall"
- 			LDFLAGS="-ggdb -Wall"
+@@ -1518,9 +1517,9 @@ AC_ARG_ENABLE( [debug],
+                               [ AC_MSG_ERROR([invalid argument given to --enable-debug]) ]
+                              )
+ 
+-                        CXXFLAGS="-g -Wall"
+-                        CFLAGS="-g -Wall"
+-                        LDFLAGS="-g -Wall"
++                        CXXFLAGS="$CXXFLAGS -g -Wall"
++                        CFLAGS="$CFLAGS -g -Wall"
++                        LDFLAGS="$LDFLAGS -g -Wall"
                          debug_static="yes"
+                         AC_DEFINE(LIBDAR_NO_OPTIMIZATION, 1, [if defined, informs the code that no optimization has been used for compilation])
+                 ],

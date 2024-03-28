@@ -1,55 +1,71 @@
 #
 # Conditional build:
-%bcond_without	ea		# support for Linux extented attributes
+%bcond_without	xattr		# support for Linux extented attributes
 %bcond_without	static		# dar_static program
-%bcond_without	static_libs	# static library
-%bcond_with	threads		# threading using libthreadar library (experimental)
+%bcond_without	static_libs	# static library (required for dar_static)
+%bcond_without	threads		# threading using libthreadar library
+%bcond_without	python		# CPython (3.x) binding
 #
-%if %{with static}
-%define with_static_libs 1
+%if %{without static_libs}
+%undefine	with_static
 %endif
 #
 Summary:	dar makes backup of a directory tree and files
 Summary(pl.UTF-8):	dar - narzędzie do tworzenia kopii zapasowych drzew katalogów i plików
 Name:		dar
-Version:	2.5.9
+Version:	2.7.14
 Release:	1
 License:	GPL v2+
 Group:		Applications/Archiving
-Source0:	http://downloads.sourceforge.net/dar/%{name}-%{version}.tar.gz
-# Source0-md5:	6448517104fc3afda1e245307a6905a9
+Source0:	https://downloads.sourceforge.net/dar/%{name}-%{version}.tar.gz
+# Source0-md5:	268f9e3c799eff1fcc2881baf7e45beb
 Patch0:		%{name}-opt.patch
 URL:		http://dar.linux.free.fr/
-%{?with_ea:BuildRequires:	attr-devel >= 2.4.16-3}
+%{?with_xattr:BuildRequires:	attr-devel >= 2.4.16-3}
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
+BuildRequires:	curl-devel
 BuildRequires:	doxygen >= 1:1.3
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	gettext-tools
 BuildRequires:	gpgme-devel >= 1.2.0
 BuildRequires:	groff
+BuildRequires:	libargon2-devel
 BuildRequires:	libcap-devel
 BuildRequires:	libgcrypt-devel >= 1.6.0
 BuildRequires:	libgpg-error-devel
-BuildRequires:	libstdc++-devel >= 6:4.7
-%{?with_threads:BuildRequires:	libthreadar-devel > 1.0.1}
+BuildRequires:	librsync-devel
+BuildRequires:	libstdc++-devel >= 6:5
+%{?with_threads:BuildRequires:	libthreadar-devel >= 1.3.1}
 BuildRequires:	libtool >= 2:1.4d
+BuildRequires:	lz4-devel
 BuildRequires:	lzo-devel >= 2
+BuildRequires:	pkgconfig
+%if %{with python}
+BuildRequires:	python3-devel >= 1:3.2
+BuildRequires:	python3-pybind11
+%endif
+BuildRequires:	sed >= 4.0
 BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
+BuildRequires:	zstd-devel >= 1.3
 %if %{with static}
-%{?with_ea:BuildRequires:	attr-static}
+%{?with_xattr:BuildRequires:	attr-static}
 BuildRequires:	bzip2-static
 BuildRequires:	glibc-static
 BuildRequires:	gpgme-static
 BuildRequires:	libassuan-static
 BuildRequires:	libgcrypt-static
 BuildRequires:	libgpg-error-static
-BuildRequires:	libstdc++-static
+BuildRequires:	librsync-static
+BuildRequires:	libstdc++-static >= 6:5
+%{?with_threads:BuildRequires:	libthreadar-static >= 1.3.1}
+BuildRequires:	lz4-static
 BuildRequires:	lzo-static
 BuildRequires:	xz-static
 BuildRequires:	zlib-static
+BuildRequires:	zstd-static >= 1.3
 %endif
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -205,10 +221,11 @@ Statyczna wersja archiwizatora dar.
 Summary:	Shared version of dar library
 Summary(pl.UTF-8):	Współdzielona wersja biblioteki dar
 Group:		Libraries
-%{?with_ea:Requires:	attr >= 2.4.16-3}
+%{?with_xattr:Requires:	attr >= 2.4.16-3}
 Requires:	gpgme >= 1.2.0
 Requires:	libgcrypt >= 1.6.0
-%{?with_threads:Requires:	libthreadar > 1.0.1}
+%{?with_threads:Requires:	libthreadar >= 1.3.1}
+Requires:	zstd >= 1.3
 
 %description libs
 Shared version of dar library.
@@ -221,17 +238,21 @@ Summary:	Header files to develop dar software
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki dar
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-%{?with_ea:Requires:	attr-devel >= 2.4.16-3}
+%{?with_xattr:Requires:	attr-devel >= 2.4.16-3}
 Requires:	bzip2-devel
-Requires:	gpgme-devel
+Requires:	gpgme-devel >= 1.2.0
+Requires:	libargon2-devel
 Requires:	libcap-devel
 Requires:	libgcrypt-devel >= 1.6.0
 Requires:	libgpg-error-devel
-Requires:	libstdc++-devel >= 6:4.7
-%{?with_threads:Requires:	libthreadar-devel > 1.0.1}
+Requires:	librsync-devel
+Requires:	libstdc++-devel >= 6:5
+%{?with_threads:Requires:	libthreadar-devel >= 1.3.1}
+Requires:	lz4-devel
 Requires:	lzo-devel >= 2
 Requires:	xz-devel
 Requires:	zlib-devel
+Requires:	zstd-devel >= 1.3
 
 %description devel
 Header files to develop software which operates on dar.
@@ -264,9 +285,23 @@ Dar ducumentation.
 %description doc -l pl.UTF-8
 Dokumentacja dla dar.
 
+%package -n python3-libdar
+Summary:	Python 3 binding for dar library
+Summary(pl.UTF-8):	Wiązanie Pythona 3 do biblioteki dar
+Group:		Libraries/Python
+Requires:	%{name}-libs = %{version}-%{release}
+
+%description -n python3-libdar
+Python 3 binding for dar library.
+
+%description -n python3-libdar -l pl.UTF-8
+Wiązanie Pythona 3 do biblioteki dar.
+
 %prep
 %setup -q
 %patch0 -p1
+
+%{__sed} -i -e 's,\$(libdir)/python3/dist-packages,%{py3_sitedir},' src/python/Makefile.am
 
 %build
 %{__gettextize}
@@ -277,10 +312,11 @@ Dokumentacja dla dar.
 %{__automake}
 %configure \
 	%{!?with_static:--disable-dar-static} \
-	%{!?with_ea:--disable-ea-support} \
+	%{!?with_xattr:--disable-ea-support} \
 	--enable-mode=64 \
+	%{!?with_python:--disable-python-binding} \
 	--enable-static%{!?with_static_libs:=no} \
-	%{?with_threads:--enable-threadar} \
+	%{!?with_threads:--disable-threadar} \
 	--disable-upx
 %{__make}
 
@@ -297,6 +333,8 @@ ln -sf %{_datadir}/%{name} misc/doc
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libdar64.la
+
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/dar/{libdar_test.py,pybind11_libdar.cpp,python/libdar_test.py}
 
 %find_lang %{name}
 
@@ -323,7 +361,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdar64.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdar64.so.5000
+%attr(755,root,root) %ghost %{_libdir}/libdar64.so.6000
 
 %files devel
 %defattr(644,root,root,755)
@@ -343,8 +381,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/man
 %{_datadir}/%{name}/mini-howto
 %{_datadir}/%{name}/samples
+%{_datadir}/%{name}/*.css
 %{_datadir}/%{name}/*.dtd
 %{_datadir}/%{name}/*.jpg
 %{_datadir}/%{name}/*.html
 %{_datadir}/%{name}/*.txt
 %{_datadir}/%{name}/README
+
+%if %{with python}
+%files -n python3-libdar
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py3_sitedir}/libdar.cpython-*.so
+%endif
