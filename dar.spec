@@ -53,8 +53,10 @@ BuildRequires:	zstd-devel >= 1.3
 %if %{with static}
 %{?with_xattr:BuildRequires:	attr-static}
 BuildRequires:	bzip2-static
+BuildRequires:	curl-static
 BuildRequires:	glibc-static
 BuildRequires:	gpgme-static
+BuildRequires:	libargon2-static
 BuildRequires:	libassuan-static
 BuildRequires:	libgcrypt-static
 BuildRequires:	libgpg-error-static
