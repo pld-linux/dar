@@ -301,7 +301,7 @@ Wiązanie Pythona 3 do biblioteki dar.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
 %{__sed} -i -e 's,\$(libdir)/python3/dist-packages,%{py3_sitedir},' src/python/Makefile.am
 
