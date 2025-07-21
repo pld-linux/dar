@@ -1,7 +1,8 @@
 #
 # Conditional build:
+%bcond_without	curl		# remote repository support via curl
 %bcond_without	xattr		# support for Linux extented attributes
-%bcond_without	static		# dar_static program
+%bcond_with	static		# dar_static program (conflicts with curl)
 %bcond_without	static_libs	# static library (required for dar_static)
 %bcond_without	threads		# threading using libthreadar library
 %bcond_without	python		# CPython (3.x) binding
@@ -308,18 +309,20 @@ Wiązanie Pythona 3 do biblioteki dar.
 %build
 %{__gettextize}
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
 	%{!?with_static:--disable-dar-static} \
 	%{!?with_xattr:--disable-ea-support} \
+	%{!?with_curl:--disable-libcurl-linking} \
 	--enable-mode=64 \
 	%{!?with_python:--disable-python-binding} \
 	--enable-static%{!?with_static_libs:=no} \
 	%{!?with_threads:--disable-threadar} \
 	--disable-upx
+
 %{__make}
 
 %install
